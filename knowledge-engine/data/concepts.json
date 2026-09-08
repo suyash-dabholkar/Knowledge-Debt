@@ -1,0 +1,183 @@
+{
+  "Arrays": {
+    "description": "A contiguous block of memory storing elements of the same type, accessed by index in O(1).",
+    "prerequisites": [],
+    "common_misconceptions": [
+      "Believing array indexing is not constant time.",
+      "Confusing array length with allocated capacity."
+    ],
+    "key_ideas": [
+      "Random access via index is O(1).",
+      "Insertion/deletion in the middle is O(n).",
+      "Arrays are the base building block for many other structures."
+    ],
+    "examples": [
+      "arr = [3, 1, 4, 1, 5]; arr[2] returns 4 instantly, regardless of array size."
+    ]
+  },
+  "Pointers": {
+    "description": "A pointer/reference stores the memory address of another value, enabling indirection and linked structures.",
+    "prerequisites": ["Arrays"],
+    "common_misconceptions": [
+      "Believing a pointer holds a copy of the value instead of an address.",
+      "Confusing a null pointer with an empty value."
+    ],
+    "key_ideas": [
+      "A pointer lets one structure refer to another without copying data.",
+      "Following ('dereferencing') a pointer retrieves the value it points to.",
+      "Linked structures like linked lists and trees are built from pointers."
+    ],
+    "examples": [
+      "node.next points to the memory address of the following node in a linked list."
+    ]
+  },
+  "Linked Lists": {
+    "description": "A sequence of nodes where each node holds data and a pointer to the next node, allowing O(1) insertion/deletion at known positions.",
+    "prerequisites": ["Pointers"],
+    "common_misconceptions": [
+      "Assuming linked lists support O(1) random access like arrays.",
+      "Forgetting to update pointers when inserting/deleting, causing broken chains."
+    ],
+    "key_ideas": [
+      "No contiguous memory requirement, unlike arrays.",
+      "Traversal is O(n); random access is O(n).",
+      "Insertion/deletion at a known node is O(1)."
+    ],
+    "examples": [
+      "1 -> 2 -> 3 -> None; inserting 5 after 1 only requires updating two pointers."
+    ]
+  },
+  "Recursion": {
+    "description": "A function solves a problem by calling itself on smaller subproblems until reaching a base case.",
+    "prerequisites": ["Arrays"],
+    "common_misconceptions": [
+      "Forgetting the base case, causing infinite recursion.",
+      "Believing recursion is always less efficient than iteration."
+    ],
+    "key_ideas": [
+      "Every recursive function needs a base case and a recursive case.",
+      "The call stack tracks pending calls, which is why DFS is naturally recursive.",
+      "Recursion trades explicit loops for implicit stack-based bookkeeping."
+    ],
+    "examples": [
+      "factorial(n) = n * factorial(n-1), with factorial(0) = 1 as the base case."
+    ]
+  },
+  "Trees": {
+    "description": "A hierarchical structure of nodes where each node has one parent (except the root) and zero or more children.",
+    "prerequisites": ["Linked Lists", "Recursion"],
+    "common_misconceptions": [
+      "Confusing a tree with a general graph (trees have no cycles and exactly one path between any two nodes).",
+      "Assuming all trees are binary trees."
+    ],
+    "key_ideas": [
+      "A tree is a special case of a graph: connected and acyclic.",
+      "Traversals (pre-order, in-order, post-order, level-order) visit nodes in different orders.",
+      "Level-order traversal of a tree is essentially BFS on a graph."
+    ],
+    "examples": [
+      "A file system directory structure is a tree: folders contain files/subfolders, with one root."
+    ]
+  },
+  "Graphs": {
+    "description": "A set of nodes (vertices) connected by edges, which may be directed/undirected and weighted/unweighted.",
+    "prerequisites": ["Trees"],
+    "common_misconceptions": [
+      "Assuming graphs cannot have cycles.",
+      "Confusing directed and undirected edges.",
+      "Assuming every graph is connected."
+    ],
+    "key_ideas": [
+      "Graphs generalize trees by allowing cycles and multiple paths.",
+      "Graphs can be represented as adjacency lists or adjacency matrices.",
+      "Traversal algorithms (BFS, DFS) are the foundation for almost all graph algorithms."
+    ],
+    "examples": [
+      "A social network: people are nodes, friendships are edges."
+    ]
+  },
+  "BFS": {
+    "description": "Breadth-First Search explores a graph level by level from a source node, using a queue (FIFO) to guarantee nodes are visited in increasing distance from the source.",
+    "prerequisites": ["Graphs"],
+    "common_misconceptions": [
+      "BFS uses a stack (this is DFS's mechanism, not BFS's).",
+      "BFS explores the deepest node first (this describes DFS).",
+      "BFS cannot find shortest paths (BFS finds shortest paths in unweighted graphs by construction)."
+    ],
+    "key_ideas": [
+      "BFS uses a FIFO queue: the first node discovered is the first one expanded.",
+      "This guarantees nodes are visited in non-decreasing order of distance from the source.",
+      "Because of this ordering guarantee, BFS finds the shortest path (fewest edges) in an unweighted graph.",
+      "BFS is the conceptual ancestor of Dijkstra's algorithm, which generalizes BFS to weighted edges using a priority queue instead of a plain queue."
+    ],
+    "examples": [
+      "Starting BFS from node A in A-B, A-C, B-D: visit order is A, then B and C (distance 1), then D (distance 2)."
+    ]
+  },
+  "DFS": {
+    "description": "Depth-First Search explores a graph by going as deep as possible along a branch before backtracking, using a stack (explicit or via recursion).",
+    "prerequisites": ["Graphs", "Recursion"],
+    "common_misconceptions": [
+      "DFS always finds the shortest path (DFS has no distance guarantee; it finds *a* path, not the shortest one).",
+      "DFS and BFS always visit nodes in the same order."
+    ],
+    "key_ideas": [
+      "DFS uses a LIFO stack (explicit or the call stack via recursion).",
+      "DFS dives deep before exploring siblings, unlike BFS's level-by-level expansion.",
+      "DFS is well suited for tasks like cycle detection, topological sort, and connected components, not shortest-path guarantees."
+    ],
+    "examples": [
+      "Starting DFS from node A in A-B, A-C, B-D: visit order could be A, B, D, C, going deep down one branch first."
+    ]
+  },
+  "Graph Traversal": {
+    "description": "The general concept of systematically visiting nodes in a graph, of which BFS and DFS are the two foundational strategies.",
+    "prerequisites": ["BFS", "DFS"],
+    "common_misconceptions": [
+      "Believing there is only one 'correct' way to traverse a graph.",
+      "Not recognizing that traversal order affects which algorithmic guarantees hold (e.g. shortest-path guarantees only from BFS)."
+    ],
+    "key_ideas": [
+      "Traversal strategy determines what guarantees you get (shortest path, connectivity, ordering).",
+      "Choosing BFS vs DFS depends on the problem: shortest path in unweighted graphs favors BFS.",
+      "Traversal is the foundation for shortest-path algorithms like Dijkstra."
+    ],
+    "examples": [
+      "Finding all nodes reachable from a source can use either BFS or DFS; finding the fewest-edges path requires BFS."
+    ]
+  },
+  "Shortest Paths": {
+    "description": "The problem of finding the minimum-cost path between nodes in a graph, where 'cost' is edge count (unweighted) or summed edge weights (weighted).",
+    "prerequisites": ["Graph Traversal"],
+    "common_misconceptions": [
+      "Assuming BFS solves shortest paths for weighted graphs too (BFS only guarantees shortest paths when all edges have equal weight).",
+      "Assuming any traversal order gives the shortest path."
+    ],
+    "key_ideas": [
+      "In unweighted graphs, BFS directly gives the shortest path (fewest edges).",
+      "In weighted graphs, edge costs differ, so a plain queue no longer works — you need to always expand the currently-cheapest node.",
+      "This need motivates replacing BFS's queue with a priority queue, which is exactly what Dijkstra's algorithm does."
+    ],
+    "examples": [
+      "In an unweighted graph, BFS from A finds node D in the fewest hops, which is the shortest path by edge count."
+    ]
+  },
+  "Dijkstra": {
+    "description": "Dijkstra's algorithm finds shortest paths from a source node in a weighted graph with non-negative edge weights, by always expanding the closest unvisited node using a priority queue.",
+    "prerequisites": ["Shortest Paths"],
+    "common_misconceptions": [
+      "Dijkstra works with negative edges (it does not; negative weights break its greedy guarantee).",
+      "Dijkstra is unrelated to BFS (in fact, Dijkstra reduces to BFS when all edge weights are equal to 1).",
+      "Dijkstra explores nodes in insertion order rather than by cumulative distance."
+    ],
+    "key_ideas": [
+      "Dijkstra is BFS generalized to weighted graphs: a priority queue (min-heap) replaces BFS's plain FIFO queue.",
+      "It greedily expands the unvisited node with the smallest known distance so far.",
+      "It requires non-negative edge weights to guarantee correctness.",
+      "Understanding why BFS guarantees shortest paths in unweighted graphs is the key intuition that transfers directly to understanding Dijkstra."
+    ],
+    "examples": [
+      "In a weighted graph, Dijkstra maintains a running 'distance so far' for each node and always expands the node with the smallest tentative distance next."
+    ]
+  }
+}
